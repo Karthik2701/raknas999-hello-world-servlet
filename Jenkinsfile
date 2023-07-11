@@ -59,6 +59,11 @@ stages {
      nexusPublisher nexusInstanceId: '12345', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/HelloWorldServlet-Pipeline/target/helloworld.war']], mavenCoordinate: [artifactId: 'hello-world-servlet-example', groupId: 'com.geekcap.vmturbo', packaging: 'war', version: '$BUILD_NUMBER']]]
       }
  }
+     stage('Deploy to container') {
+        steps {
+            deploy adapters: [tomcat9(credentialsId: 'Tomcat-cred', path: '', url: 'http://3.87.72.138:8080')], contextPath: 'HelloWorlServelt-Pipeline', war: '**/*.war'
+}
+     }
 }
 post {
         success {
